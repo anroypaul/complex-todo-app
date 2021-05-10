@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "name": "travel-log-api",
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "src/index.js"
+    }
+  ],
+  "alias": ["travel-log-api"],
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": "4000",
+    "DATABASE_URL": "mongodb+srv://anroyadmin:XmzOnYmLGUqxsvpC@cluster0.0nxgl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "CORS_ORIGIN": "http://localhost:3000",
+    "API_KEY": "keyboardcat",
+    "API_REFRESH_KEY": "dogecat",
+    "DB_USER": "postgres",
+    "DB_PASSWORD": "jndm",
+    "DB_HOST": "localhost",
+    "DB_PORT": "5432",
+    "DB_NAME": "complex-todo"
+  }
+}

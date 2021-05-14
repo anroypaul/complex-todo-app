@@ -1,26 +1,31 @@
-[+] Todo logic
-[+] Todo reducers
+- [+] Todo logic
+- [+] Todo reducers
+- [+] Redux-thunk
+- [+] Group reducers/actions with index.js files
+- [+] ToDos API
+- [+] Auth API
 
-[+] Redux-thunk
-[+] Group reducers/actions with index.js files
+Auth:
+- [+] Auth reducer
+- [+] Auth actions
+- [+] Auth Page
+- [+] Auth Logic
+- [+] Get username by token
+- [+] Handle token update when expired
+- [+] Fix issue with error after login
+- [+] Route to Todo list after login page
+- [+] Save auth state after page reloading
 
-[+] ToDos API
-[+] Auth API
+Logic:
+- [] Enter to login handler
+- [] Click on categories - update state
+- [] Edit ToDo popup
 
-[+] Auth reducer
-[+] Auth actions
-[+] Auth Page
-[+] Auth Logic
-[+] Get username by token
-[+] Handle token update when expired
-[+-] Fix issue with error after login
+Error handling:
+- [] Login form validation
+- [] Custom inputs and other stuff
 
-[+] Route to Todo list after login page
-[+] Save auth state after page reloading
-
-[] Error handling:
-[] Login form
-[] Custom inputs and other stuff
-
-[] Flexbox layout
-[] Styles
+Styling:
+- [] Flexbox layout
+- [] List of todos 
+- [] Styles

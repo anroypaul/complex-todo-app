@@ -14,6 +14,7 @@ const state = {
     //   completed: false,
     // },
   ],
+  categories: [],
 };
 
 export default state;

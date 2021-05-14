@@ -1,6 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {loadCategories} from '../redux/actions/categoriesActions';
 
 const Sidebar = () => {
+  const categories = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadCategories()).catch((error) => {
+      alert(error);
+    });
+  }, [dispatch]);
+
   return (
     <div
       className="three wide tablet only three wide computer only column"
@@ -20,31 +31,12 @@ const Sidebar = () => {
           <i className="calendar icon"></i>Upcoming
         </a>
         <div className="ui divider"></div>
-        <a href="#" className="item">
-          Nav item
-        </a>
-        <a href="#" className="item">
-          Nav item again
-        </a>
-        <a href="#" className="item">
-          One more nav
-        </a>
-        <a href="#" className="item">
-          Another nav item
-        </a>
-        <a href="#" className="item">
-          More navigation
-        </a>
-        <div className="ui divider"></div>
-        <a href="#" className="item">
-          Macintosh
-        </a>
-        <a href="#" className="item">
-          Linux
-        </a>
-        <a href="#" className="item">
-          Windows
-        </a>
+        {categories.map((category) => (
+          <a key={category.id} href="#" className="item">
+            {category.name}
+            <div className="ui label">{category.todoCount}</div>
+          </a>
+        ))}
       </div>
     </div>
   );

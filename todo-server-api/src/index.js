@@ -1,13 +1,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const {Sequelize} = require('sequelize');
-
 // const mongoose = require("mongoose");
 
 const middlewares = require('./middlewares');
 const authApi = require('./api/Auth');
 const todosApi = require('./api/Todo');
+const categoriesApi = require('./api/Category');
 
 require('dotenv').config();
 
@@ -36,29 +35,6 @@ app.use(morgan('common'));
 //   console.log("MongoDB database connection established successfully");
 // });
 
-const credentials = {
-  dbUser: process.env.DB_USER,
-  dbPass: process.env.DB_PASSWORD,
-  dbHost: process.env.DB_HOST,
-  dbPort: process.env.DB_PORT,
-  dbName: process.env.DB_NAME,
-};
-
-const sequelize = new Sequelize(
-  `postgres://${credentials.dbUser}:${credentials.dbPass}@${credentials.dbHost}:${credentials.dbPort}/${credentials.dbName}`,
-);
-
-const connection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-};
-
-connection();
-
 // test route
 app.get('/', (req, res) => {
   res.json({message: 'Hello World!'});
@@ -66,6 +42,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authApi);
 app.use('/api/todos', todosApi);
+app.use('/api/categories', categoriesApi);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);

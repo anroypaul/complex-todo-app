@@ -1,10 +1,44 @@
 /**
  *
+ * @return {token}
+ */
+export function getAccessToken() {
+  const token = localStorage.getItem('accessToken');
+  return token ? token : '';
+}
+
+/**
+ *
+ * @return {token}
+ */
+export function getRefreshToken() {
+  const token = localStorage.getItem('refreshToken');
+  return token ? token : '';
+}
+
+/**
+ * Set Access Token
+ * @param {*} token
+ */
+export function setAccessToken(token) {
+  localStorage.setItem('accessToken', token);
+}
+
+/**
+ * Set Refresh Token
+ * @param {*} token
+ */
+export function setRefreshToken(token) {
+  localStorage.setItem('refreshToken', token);
+}
+
+/**
+ *
  * @param {*} response
  * @return {*} response
  */
 export async function handleResponse(response) {
-  console.log(response);
+  // console.log(response);
   if (response.status === 200) return response.data;
   if (response.status === 400) {
     // So, a server-side validation error occurred.

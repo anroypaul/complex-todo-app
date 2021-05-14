@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {signIn} from '../redux/actions/authActions';
+import {signIn, signUp} from '../redux/actions/authActions';
 
 /**
  * @component
@@ -17,6 +17,13 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     dispatch(signIn(username, password));
+    setLoading(false);
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    dispatch(signUp(username, password));
     setLoading(false);
   };
 
@@ -71,7 +78,7 @@ const Login = () => {
           </form>
 
           <div className="ui message">
-            New to us? <button>Sign Up</button>
+            New to us? <button onClick={handleSignUp}>Sign Up</button>
           </div>
         </div>
       </div>

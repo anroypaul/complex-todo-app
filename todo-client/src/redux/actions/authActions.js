@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import * as authApi from '../../api/authApi';
+import * as apiUtils from '../../api/apiUtils';
 
 // export const signInSuccess = (userData) => {
 //   return { type: types.SIGN_IN_SUCCESS, userData };
@@ -10,9 +11,11 @@ export const signIn = (username, password) => {
     try {
       const data = await authApi.signIn(username, password);
       // console.log(data)
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      dispatch(authUser(data.accessToken, data.refreshToken));
+      if (data) {
+        apiUtils.setAccessToken(data.accessToken);
+        apiUtils.setRefreshToken(data.refreshToken);
+        dispatch(authUser(data.accessToken, data.refreshToken));
+      }
     } catch (error) {
       throw error;
     }
@@ -36,4 +39,10 @@ export const signUp = (username, password) => {
 
 export const authUser = (token, refreshToken) => {
   return {type: types.AUTHENTICATE_THE_USER, token, refreshToken};
+};
+
+export const logout = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  return {type: types.LOG_OUT};
 };

@@ -18,7 +18,7 @@
 [+] Route to Todo list after login page
 [+] Save auth state after page reloading
 
-[] Error handling
+[] Error handling:
 [] Login form
 [] Custom inputs and other stuff
 

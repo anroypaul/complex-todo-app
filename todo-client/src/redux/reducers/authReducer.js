@@ -35,6 +35,12 @@ export default function authReducer(state = initialState.auth, action) {
         refreshToken: action.refreshToken,
       };
 
+    case types.LOG_OUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
+
     default:
       return state;
   }

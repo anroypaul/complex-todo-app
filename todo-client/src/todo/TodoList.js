@@ -1,17 +1,18 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import TodoItem from './TodoItem';
 import AddTodo from './AddTodo';
 import {loadTodos, toggleTodoAction} from '../redux/actions/todoActions';
-import PropTypes from 'prop-types';
 
-const TodoList = ({todos, loadTodos, toggleTodo, isAuthed}) => {
-  console.log(isAuthed);
+const TodoList = () => {
+  const todos = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    loadTodos().catch((error) => {
+    dispatch(loadTodos()).catch((error) => {
       alert(error);
     });
-  }, [isAuthed]);
+  }, [dispatch]);
 
   return (
     <div className="ui segment">
@@ -21,15 +22,15 @@ const TodoList = ({todos, loadTodos, toggleTodo, isAuthed}) => {
             <h3 className="ui header ">My ToDos</h3>
           </div>
           <div className="ui section divider"></div>
-          <div className="todo-list-body">
-            <div className="ui fluid aligned selection list">
+          <div className="todo-list-body ui">
+            <div className="ui relaxed divided items">
               {todos.map((todo) => (
                 <TodoItem
-                  key={todo._id}
+                  key={todo.id}
                   description={todo.description}
-                  date={todo.date}
+                  dueDate={todo.dueDate}
                   completed={todo.completed}
-                  onClick={() => toggleTodo(todo._id)}
+                  onClick={() => dispatch(toggleTodoAction(todo.id))}
                 />
               ))}
               <AddTodo />
@@ -44,21 +45,4 @@ const TodoList = ({todos, loadTodos, toggleTodo, isAuthed}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  todos: state.todos,
-  isAuthed: state.auth.isAuthenticated,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  toggleTodo: (id) => dispatch(toggleTodoAction(id)),
-  loadTodos: () => dispatch(loadTodos()),
-});
-
-TodoList.propTypes = {
-  todos: PropTypes.array.isRequired,
-  loadTodos: PropTypes.func.isRequired,
-  toggleTodo: PropTypes.func.isRequired,
-  isAuthed: PropTypes.bool.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default TodoList;

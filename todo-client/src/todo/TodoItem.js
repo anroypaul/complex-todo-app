@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TodoItem = ({description, date, completed, onClick}) => {
+const TodoItem = ({description, dueDate, completed, onClick}) => {
   // move to utils
   const prettyFormatDate = (date) => {
     /**
@@ -34,13 +34,15 @@ const TodoItem = ({description, date, completed, onClick}) => {
   };
 
   return (
-    <div className="item fluid" onClick={onClick}>
+    <div className="todo item fluid">
       <div className="ui checked checkbox">
-        <input type="checkbox" checked={completed} readOnly />
+        <input type="checkbox" checked={completed} readOnly onClick={onClick} />
         <label>
           <div className="content aligned">
             <p className="header">{description}</p>
-            <div className="description">{prettyFormatDate(date)}</div>
+            <div className="description">
+              {dueDate && prettyFormatDate(dueDate)}
+            </div>
           </div>
         </label>
       </div>
@@ -50,7 +52,7 @@ const TodoItem = ({description, date, completed, onClick}) => {
 
 TodoItem.propTypes = {
   description: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
+  dueDate: PropTypes.instanceOf(Date),
   completed: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };

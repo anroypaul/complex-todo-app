@@ -12,10 +12,12 @@ To-Do controller:
 [+] Update (add comments)
 [+] Delete
 
-[] Implement Categories for ToDos
+[+] Implement Categories for ToDos
 
-[] Middleware errors handle 
+[+] Middleware errors handle 
 
 Misc 
 [] Use async/await instead of promises
-[] ESList
+[+] ESList
+
+[] fix DB names to lowercase etc

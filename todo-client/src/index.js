@@ -6,11 +6,12 @@ import {configureStore} from './redux/store';
 import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import {authUser} from './redux/actions/authActions';
+import * as apiUtils from './api/apiUtils';
 
 const store = configureStore();
 
-const token = localStorage.getItem('accessToken');
-const refreshToken = localStorage.getItem('refreshToken');
+const token = apiUtils.getAccessToken();
+const refreshToken = apiUtils.getRefreshToken();
 if (token && refreshToken) {
   store.dispatch(authUser(token, refreshToken));
 }

@@ -1,15 +1,16 @@
 const {verifyToken} = require('../middlewares');
 const {Router} = require('express');
-
-const User = require('../schemas/User');
-const Todo = require('../schemas/Todo');
+const User = require('../db/models').User;
+const Todo = require('../db/models').Todo;
 
 const router = new Router();
 
 router.get('/', [verifyToken], async (req, res, next) => {
   try {
-    const currentUser = await User.findById(req.userId);
-    res.json(currentUser.todos);
+    // get all current user todo list
+    // const category = req.params.categoryId;
+    const todoList = await Todo.findAll({where: {UserId: req.userId}});
+    res.json(todoList);
   } catch (error) {
     next(error);
   }
@@ -17,10 +18,10 @@ router.get('/', [verifyToken], async (req, res, next) => {
 
 router.post('/', [verifyToken], async (req, res, next) => {
   try {
-    const newTodo = new Todo(req.body);
-    const currentUser = await User.findById(req.userId);
-    currentUser.todos.push(newTodo);
-    await currentUser.save();
+    // save todo in current category
+    // TODO validate
+    const {description} = req.body;
+    const newTodo = await Todo.create({description, UserId: req.userId});
     res.json(newTodo);
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -32,10 +33,11 @@ router.post('/', [verifyToken], async (req, res, next) => {
 
 router.put('/', [verifyToken], async (req, res, next) => {
   try {
-    const currentUser = await User.findById(req.userId);
-    const todoToUpdate = currentUser.todos.id(req.body.todoId);
-    todoToUpdate.set(req.body);
-    await currentUser.save();
+    // update current todo by id
+    // TODO validate
+    const todoToUpdate = await Todo.update(req.body.todoId, {
+      where: {id: req.body.todoId},
+    });
     res.json(todoToUpdate);
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -47,9 +49,12 @@ router.put('/', [verifyToken], async (req, res, next) => {
 
 router.delete('/:id', [verifyToken], async (req, res, next) => {
   try {
-    const currentUser = await User.findById(req.userId);
-    currentUser.todos.id(req.params.id).remove();
-    await currentUser.save();
+    // delete current todo
+    await User.destroy({
+      where: {
+        id: req.body.id,
+      },
+    });
     res.status(200).send('Todo has been successfully deleted');
   } catch (error) {
     next(error);

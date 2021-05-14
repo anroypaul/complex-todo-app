@@ -1,7 +1,7 @@
 const {Router} = require('express');
-const {verifyToken} = require('../middlewares');
+// const {verifyToken} = require('../middlewares');
 const config = require('../config/auth');
-const User = require('../models/_User');
+const User = require('../db/models').User;
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -18,6 +18,7 @@ router.use((req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
+    // TODO validate values
     const newUser = await User.create({
       username: req.body.username,
       password: bcrypt.hashSync(req.body.password, 8),
@@ -34,10 +35,11 @@ router.post('/signup', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
   try {
+    console.log(User);
     const user = await User.findOne({
-      where: {name: req.body.username},
+      where: {username: req.body.username},
     });
-
+    console.log(user);
     if (!user) {
       // TODO
       return res.status(404).send({message: 'User not found.'});
@@ -57,7 +59,7 @@ router.post('/login', async (req, res, next) => {
     }
 
     const token = jwt.sign({id: user.id}, config.auth_secret, {
-      expiresIn: 900, // 15 min //86400, // 24 hours
+      expiresIn: 5, // 15 min //86400, // 24 hours
     });
     const refreshToken = jwt.sign({id: user.id}, config.refresh_secret, {
       expiresIn: 604800, // 86400, // 7 days
@@ -75,19 +77,25 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
-router.post('/refresh', [verifyToken], (req, res) => {
+router.post('/refresh', (req, res) => {
   const oldRefreshToken = req.headers['x-refresh-token'];
 
-  if (oldRefreshToken == null) return res.sendStatus(401);
+  if (oldRefreshToken == null) return res.sendStatus(419);
 
   jwt.verify(oldRefreshToken, config.refresh_secret, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) {
+      if (err.name === 'TokenExpiredError') {
+        res.status(419).send({message: 'Token expired!'});
+      }
+      return res.sendStatus(403);
+    }
     const newAccessToken = jwt.sign({id: user.id}, config.auth_secret, {
-      expiresIn: 900, // 15 min
+      expiresIn: 5, // 900, // 15 min
     });
     const newRefreshToken = jwt.sign({id: user.id}, config.refresh_secret, {
       expiresIn: 604800, // 86400
     });
+    console.log('new tokens are granted');
     res.json({accessToken: newAccessToken, refreshToken: newRefreshToken});
   });
 });

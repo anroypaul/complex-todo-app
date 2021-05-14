@@ -26,15 +26,13 @@ export const loadTodosSuccess = (todos) => {
 };
 
 export const loadTodos = () => {
-  return function (dispatch) {
-    return todoApi
-      .getTodos()
-      .then((todos) => {
-        dispatch(loadTodosSuccess(todos));
-      })
-      .catch((error) => {
-        throw error;
-      });
+  return async function (dispatch) {
+    try {
+      const todos = await todoApi.getTodos();
+      if (todos) dispatch(loadTodosSuccess(todos));
+    } catch (error) {
+      throw error;
+    }
   };
 };
 

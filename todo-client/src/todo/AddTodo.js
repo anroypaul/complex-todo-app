@@ -24,7 +24,7 @@ const AddTodo = ({saveTodo}) => {
     <>
       {formActivated ? (
         <form className="add-todo" onSubmit={onFormSubmit}>
-          <div className="ui  input">
+          <div className="ui fluid input action">
             <input
               placeholder="New To-Do..."
               name="new-todo"
@@ -43,7 +43,9 @@ const AddTodo = ({saveTodo}) => {
       ) : (
         <div className="item fluid" onClick={onClick}>
           <div className="ui checked checkbox">+</div>
-          <div className="content aligned">Add task</div>
+          <div className="content aligned">
+            <button className="ui button">Add task</button>
+          </div>
         </div>
       )}
     </>

@@ -11,7 +11,7 @@ export default function todoReducer(state = initialState.todos, action) {
   switch (action.type) {
     case types.TOGGLE_TODO:
       return state.map((todo) =>
-        todo._id === action.id ? {...todo, completed: !todo.completed} : todo,
+        todo.id === action.id ? {...todo, completed: !todo.completed} : todo,
       );
     // case types.ADD_TODO:
     //   const = action.todo;

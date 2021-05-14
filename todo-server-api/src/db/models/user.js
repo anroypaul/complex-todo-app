@@ -1,5 +1,6 @@
 'use strict';
 const {Model} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   /**
    * @model User
@@ -14,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Category);
+      this.hasMany(models.Todo);
     }
   }
   User.init(

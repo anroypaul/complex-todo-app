@@ -17,9 +17,14 @@ Auth:
 - [+] Save auth state after page reloading
 
 Logic:
-- [] Enter to login handler
-- [] Click on categories - update state
+- [] Enter click to login handler
+- [+] Add Category logic
+- [+] Click on categories - update state
 - [] Edit ToDo popup
+- [] Introduce Due Date feature
+- [+] Update counter of tasks in category sidebar
+- [] Popup for category delete 
+- [] Ask if delete todos as well 
 
 Error handling:
 - [] Login form validation

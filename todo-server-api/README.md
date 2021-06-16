@@ -1,5 +1,8 @@
 ToDo List API:
 
+Migrations commamd:
+```npx sequelize-cli db:migrate```
+
 - [+] env file config
 - [+] Token-based auth
 - [+] Verify token middleware

@@ -29,7 +29,7 @@ export default function todoReducer(state = initialState.todos, action) {
 
     case types.UPDATE_TODO_SUCCESS:
       return state.map((todo) =>
-        todo._id === action.todo._id ? action.todo : todo,
+        todo.id === action.todo.id ? action.todo : todo,
       );
     case types.LOAD_TODOS_SUCCESS:
       return action.todos;

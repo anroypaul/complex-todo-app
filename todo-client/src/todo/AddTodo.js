@@ -1,22 +1,37 @@
 import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {saveTodo} from '../redux/actions/todoActions';
 import PropTypes from 'prop-types';
 
 const AddTodo = ({saveTodo}) => {
+  const currentCategory = useSelector((state) =>
+    state.categories.filter(
+      (category) =>
+        category.selected !== undefined && category.selected === true,
+    ),
+  );
   const [description, setDescription] = useState('');
   const [formActivated, setFormActivated] = useState(false);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    saveTodo({description, date: Date.now()});
+    const newTodo = {description};
+
+    if (!isNaN(parseInt(currentCategory.id))) {
+      newTodo.CategoryId = currentCategory.id;
+    } else {
+      if (currentCategory.id === 'TODAY') {
+        newTodo.dueDate = Date.now();
+      }
+    }
+
+    saveTodo(newTodo);
     setDescription('');
     setFormActivated(false);
   };
 
   const onClick = (e) => {
     e.preventDefault();
-    console.log(formActivated);
     formActivated ? setFormActivated(false) : setFormActivated(true);
   };
 

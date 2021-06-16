@@ -12,6 +12,18 @@ export function getTodos() {
 }
 
 /**
+ * @param {*} category
+ * @return {*}
+ */
+export function getTodosByCategory(category) {
+  return request({
+    url: `${process.env.REACT_APP_API_URL}/category/${category.id}/todos`,
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+/**
  *
  * @param {*} todo
  * @return {Promise} axios

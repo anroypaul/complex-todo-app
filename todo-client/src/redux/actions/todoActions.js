@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import * as todoApi from '../../api/todoApi';
-
+import {incrementCurrentCategoryTodoCounter} from './categoriesActions';
 // export const addTodoAction = (todo) => ({
 //   type: types.ADD_TODO,
 //   payload: todo,
@@ -40,9 +40,11 @@ export const saveTodo = (todo) => {
   return async function (dispatch, getState) {
     try {
       const savedTodo = await todoApi.saveTodo(todo);
-      todo._id
-        ? dispatch(updateTodoSuccess(savedTodo))
-        : dispatch(createTodoSuccess(savedTodo));
+      if (todo.id) dispatch(updateTodoSuccess(savedTodo));
+      else {
+        dispatch(incrementCurrentCategoryTodoCounter());
+        dispatch(createTodoSuccess(savedTodo));
+      }
     } catch (error) {
       throw error;
     }

@@ -21,10 +21,10 @@
     "CORS_ORIGIN": "http://localhost:3000",
     "API_KEY": "keyboardcat",
     "API_REFRESH_KEY": "dogecat",
-    "DB_USER": "postgres",
-    "DB_PASSWORD": "jndm",
+    "DB_USER": "main",
+    "DB_PASSWORD": "main",
     "DB_HOST": "localhost",
     "DB_PORT": "5432",
-    "DB_NAME": "complex-todo"
+    "DB_NAME": "main"
   }
 }

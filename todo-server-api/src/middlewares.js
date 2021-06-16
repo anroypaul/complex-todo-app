@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('./config/auth.js');
 const User = require('./schemas/User');
-// const {Sequelize} = require('sequelize');
+const {Sequelize} = require('sequelize');
 
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
@@ -53,34 +53,35 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-// const databaseConnection = () => {
-//   const credentials = {
-//     dbUser: process.env.DB_USER,
-//     dbPass: process.env.DB_PASSWORD,
-//     dbHost: process.env.DB_HOST,
-//     dbPort: process.env.DB_PORT,
-//     dbName: process.env.DB_NAME,
-//   };
+const databaseConnection = () => {
+  const credentials = {
+    dbUser: process.env.DB_USER,
+    dbPass: process.env.DB_PASSWORD,
+    dbHost: process.env.DB_HOST,
+    dbPort: process.env.DB_PORT,
+    dbName: process.env.DB_NAME,
+  };
 
-//   const sequelize = new Sequelize(
-//     `postgres://${credentials.dbUser}:${credentials.dbPass}@${credentials.dbHost}:${credentials.dbPort}/${credentials.dbName}`,
-//   );
+  const sequelize = new Sequelize(
+    `postgres://${credentials.dbUser}:${credentials.dbPass}@${credentials.dbHost}:${credentials.dbPort}/${credentials.dbName}`,
+  );
 
-//   const connection = async () => {
-//     try {
-//       await sequelize.authenticate();
-//       console.log('Connection has been established successfully.');
-//     } catch (error) {
-//       console.error('Unable to connect to the database:', error);
-//     }
-//   };
+  const connection = async () => {
+    try {
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
+  };
 
-//   connection();
-// };
+  connection();
+};
 
 module.exports = {
   notFound,
   errorHandler,
   checkDuplicateUsername,
   verifyToken,
+  databaseConnection,
 };

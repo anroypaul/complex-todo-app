@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import {configureStore} from './redux/store';
 import {Provider} from 'react-redux';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import {authUser} from './redux/actions/authActions';
 import * as apiUtils from './api/apiUtils';
@@ -19,7 +20,9 @@ if (token && refreshToken) {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <Route path="/" component={App} />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

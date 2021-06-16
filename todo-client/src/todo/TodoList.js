@@ -6,6 +6,12 @@ import {loadTodos, toggleTodoAction} from '../redux/actions/todoActions';
 
 const TodoList = () => {
   const todos = useSelector((state) => state.todos);
+  const currentCategory = useSelector((state) =>
+    state.categories.filter(
+      (category) =>
+        category.selected !== undefined && category.selected === true,
+    ),
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +25,9 @@ const TodoList = () => {
       <div className="sixteen wide column">
         <div className="ui celled container">
           <div className="todo-list-header">
-            <h3 className="ui header ">My ToDos</h3>
+            <h3 className="ui header ">
+              {currentCategory[0]?.name || 'INBOX'}
+            </h3>
           </div>
           <div className="ui section divider"></div>
           <div className="todo-list-body ui">

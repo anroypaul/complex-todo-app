@@ -47,6 +47,8 @@ app.use('/api/categories', categoriesApi);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
+middlewares.databaseConnection();
+
 // app start
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);

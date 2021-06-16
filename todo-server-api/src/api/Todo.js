@@ -1,6 +1,5 @@
 const {verifyToken} = require('../middlewares');
 const {Router} = require('express');
-const User = require('../db/models').User;
 const Todo = require('../db/models').Todo;
 
 const router = new Router();
@@ -20,8 +19,13 @@ router.post('/', [verifyToken], async (req, res, next) => {
   try {
     // save todo in current category
     // TODO validate
-    const {description} = req.body;
-    const newTodo = await Todo.create({description, UserId: req.userId});
+    const {description, dueDate, CategoryId} = req.body;
+    const newTodo = await Todo.create({
+      description,
+      dueDate,
+      CategoryId,
+      UserId: req.userId,
+    });
     res.json(newTodo);
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -50,9 +54,9 @@ router.put('/', [verifyToken], async (req, res, next) => {
 router.delete('/:id', [verifyToken], async (req, res, next) => {
   try {
     // delete current todo
-    await User.destroy({
+    await Todo.destroy({
       where: {
-        id: req.body.id,
+        id: {$eq: req.params.id},
       },
     });
     res.status(200).send('Todo has been successfully deleted');

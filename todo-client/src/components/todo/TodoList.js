@@ -2,7 +2,13 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import TodoItem from './TodoItem';
 import AddTodo from './AddTodo';
-import {loadTodos, toggleTodoAction} from '../../redux/actions/todoActions';
+import {
+  deleteTodoAction,
+  loadTodos,
+  toggleTodoAction,
+} from '../../redux/actions/todoActions';
+import EditTodo from './EditTodo';
+import ActionModal from '../../layout/ActionModal';
 
 const TodoList = () => {
   const todos = useSelector((state) => state.todos);
@@ -38,8 +44,43 @@ const TodoList = () => {
                   description={todo.description}
                   dueDate={todo.dueDate}
                   completed={todo.completed}
+                  priority={todo.priority}
                   onClick={() => dispatch(toggleTodoAction(todo.id))}
-                />
+                >
+                  <ActionModal
+                    title="Edit"
+                    onConfirmClick={() => dispatch(deleteTodoAction(todo.id))}
+                    confirmButtonText="Save"
+                    trigger={
+                      <a>
+                        <i className="edit alternate icon"></i>
+                      </a>
+                    }
+                  >
+                    <EditTodo
+                      description={todo.description}
+                      dueDate={todo.dueDate}
+                      completed={todo.completed}
+                      priority={todo.priority}
+                    />
+                  </ActionModal>
+
+                  <ActionModal
+                    title="Delete"
+                    onConfirmClick={() => dispatch(deleteTodoAction(todo.id))}
+                    confirmButtonText="Delete"
+                    trigger={
+                      <a>
+                        <i className="trash alternate icon"></i>
+                      </a>
+                    }
+                  >
+                    <p>
+                      Are you sure you want to delete{' '}
+                      <strong>{todo.description}</strong>?
+                    </p>
+                  </ActionModal>
+                </TodoItem>
               ))}
               <AddTodo />
             </div>

@@ -96,12 +96,15 @@ code {
   display: flex;
   justify-content: stretch;
   padding: 20px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  border-top: 1px solid  rgb(222, 222, 223);
+  /* border-bottom: 1px solid  rgb(177, 177, 177); */
 }
 
 .todo > .todo-header {
   flex: 0 1 0;
-  padding-right: 10px;
+  padding: 0 10px 0 5px;
+  margin: auto 0  ;
 }
 
 .todo > .todo-body {
@@ -118,5 +121,5 @@ code {
 }
 
 .todo:hover {
-  background-color: rgb(197, 196, 196);
+  background-color: #e0e1e2;
 }

@@ -13,6 +13,9 @@ export default function todoReducer(state = initialState.todos, action) {
       return state.map((todo) =>
         todo.id === action.id ? {...todo, completed: !todo.completed} : todo,
       );
+
+    case types.DELETE_TODO:
+      return state.filter((todo) => todo.id !== action.id);
     // case types.ADD_TODO:
     //   const = action.todo;
     //   return [

@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TodoItem = ({description, dueDate, completed, onClick}) => {
+const TodoItem = ({
+  children,
+  description,
+  dueDate,
+  completed,
+  priority,
+  onClick,
+}) => {
   // move to utils
   const prettyFormatDate = (date) => {
     /**
@@ -55,15 +62,20 @@ const TodoItem = ({description, dueDate, completed, onClick}) => {
           </div>
         </div>
       </div>
-      <div className="todo-actions">Actions</div>
+      <div className="todo-actions">
+        Actions
+        {children}
+      </div>
     </div>
   );
 };
 
 TodoItem.propTypes = {
+  children: PropTypes.EditTodo,
   description: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   completed: PropTypes.bool.isRequired,
+  priority: PropTypes.number,
   onClick: PropTypes.func.isRequired,
 };
 

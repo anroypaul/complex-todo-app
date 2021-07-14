@@ -11,6 +11,11 @@ export const toggleTodoAction = (id) => ({
   id,
 });
 
+export const deleteTodoAction = (id) => ({
+  type: types.DELETE_TODO,
+  id,
+});
+
 export const createTodoSuccess = (todo) => ({
   type: types.CREATE_TODO_SUCCESS,
   todo,

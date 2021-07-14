@@ -92,6 +92,31 @@ code {
   height: 100%;
 }
 
-div.todo:hover {
+.todo {
+  display: flex;
+  justify-content: stretch;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.todo > .todo-header {
+  flex: 0 1 0;
+  padding-right: 10px;
+}
+
+.todo > .todo-body {
+  flex: 1 1 0;
+  text-align: left;
+}
+
+.todo > .todo-actions {
+  flex: 0 1 0;
+}
+
+.checked-text {
+  text-decoration: line-through;
+}
+
+.todo:hover {
   background-color: rgb(197, 196, 196);
 }

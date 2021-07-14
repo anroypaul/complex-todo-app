@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import './App.css';
-import Login from './auth/Login';
+import Login from './components/auth/Login';
 import Header from './layout/Header';
 import Sidebar from './layout/Sidebar';
 import Dashboard from './layout/Dashboard';

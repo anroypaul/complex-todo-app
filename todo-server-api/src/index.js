@@ -47,7 +47,7 @@ app.use('/api/categories', categoriesApi);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
-middlewares.databaseConnection();
+// middlewares.databaseConnection();
 
 // app start
 app.listen(port, () => {

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import AddCategory from '../category/AddCategory';
+import AddCategory from '../components/category/AddCategory';
 import {
   loadCategories,
   switchCurrentCategory,

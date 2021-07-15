@@ -24,7 +24,7 @@ export default function categoryReducer(
       return state.map((category) => {
         if (category.id === action.category.id) {
           category.selected = true;
-          return category;
+          return {...category};
         } else {
           category.selected = false;
         }

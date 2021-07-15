@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const AddTodo = ({saveTodo}) => {
   const currentCategory = useSelector((state) =>
-    state.categories.filter(
+    state.categories.find(
       (category) =>
         category.selected !== undefined && category.selected === true,
     ),
@@ -16,7 +16,7 @@ const AddTodo = ({saveTodo}) => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     const newTodo = {description};
-
+    console.log(currentCategory);
     if (!isNaN(parseInt(currentCategory.id))) {
       newTodo.CategoryId = currentCategory.id;
     } else {

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import TodoItem from './TodoItem';
 import AddTodo from './AddTodo';
 import {
-  deleteTodoAction,
+  deleteTodo,
   loadTodos,
   toggleTodoAction,
   saveTodo,
@@ -32,7 +32,6 @@ const TodoList = () => {
 
   const handlePaginationChange = (e, {activePage}) => {
     setPage(activePage);
-    console.log('clicked');
   };
 
   const updateTodo = (updatedTodo) => {
@@ -73,7 +72,7 @@ const TodoList = () => {
                   />
                   <ActionModal
                     title="Delete"
-                    onConfirmClick={() => dispatch(deleteTodoAction(todo.id))}
+                    onConfirmClick={() => dispatch(deleteTodo(todo.id))}
                     confirmButtonText="Delete"
                     trigger={
                       <a>

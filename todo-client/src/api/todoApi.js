@@ -43,7 +43,7 @@ export function saveTodo(todo) {
  * @return {Promise}
  */
 export function deleteTodo(todoId) {
-  return request({url: baseUrl + todoId, method: 'DELETE'})
+  return request({url: `${baseUrl}/${todoId}`, method: 'DELETE'})
     .then(handleResponse)
     .catch(handleError);
 }

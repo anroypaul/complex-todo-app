@@ -78,9 +78,10 @@ router.put('/:id', [verifyToken], async (req, res, next) => {
 router.delete('/:id', [verifyToken], async (req, res, next) => {
   try {
     // delete current todo
+    const idToDelete = req.params.id;
     await Todo.destroy({
       where: {
-        id: {$eq: req.params.id},
+        id: idToDelete,
       },
     });
     res.status(200).send('Todo has been successfully deleted');

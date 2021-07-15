@@ -11,8 +11,8 @@ export const toggleTodoAction = (id) => ({
   id,
 });
 
-export const deleteTodoAction = (id) => ({
-  type: types.DELETE_TODO,
+export const deleteTodoSuccess = (id) => ({
+  type: types.DELETE_TODO_SUCCESS,
   id,
 });
 
@@ -50,6 +50,18 @@ export const saveTodo = (todo) => {
         dispatch(incrementCurrentCategoryTodoCounter());
         dispatch(createTodoSuccess(savedTodo));
       }
+    } catch (error) {
+      throw error;
+    }
+  };
+};
+
+export const deleteTodo = (id) => {
+  return async function (dispatch, getState) {
+    try {
+      const response = await todoApi.deleteTodo(id);
+      if (response === 'Todo has been successfully deleted')
+        dispatch(deleteTodoSuccess(id));
     } catch (error) {
       throw error;
     }

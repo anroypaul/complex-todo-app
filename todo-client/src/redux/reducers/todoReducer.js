@@ -14,8 +14,21 @@ export default function todoReducer(state = initialState.todos, action) {
         todo.id === action.id ? {...todo, completed: !todo.completed} : todo,
       );
 
-    case types.DELETE_TODO:
-      return state.rows.filter((todo) => todo.id !== action.id);
+    case types.DELETE_TODO_SUCCESS:
+      const indexOfElementToRemove = state.rows.findIndex(
+        (todo) => todo.id === action.id,
+      );
+
+      console.log(indexOfElementToRemove);
+
+      return {
+        ...state,
+        rows: [
+          ...state.rows.slice(0, indexOfElementToRemove),
+          ...state.rows.slice(indexOfElementToRemove + 1),
+        ],
+      };
+    // return state.rows.filter((todo) => todo.id !== action.id);
     // case types.ADD_TODO:
     //   const = action.todo;
     //   return [

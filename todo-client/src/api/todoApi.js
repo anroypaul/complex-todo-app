@@ -1,14 +1,24 @@
 import request from './request';
 import {handleResponse, handleError} from './apiUtils';
 
-const baseUrl = process.env.REACT_APP_API_URL + '/todos/';
+const baseUrl = process.env.REACT_APP_API_URL + '/todos';
 
 /**
+ * @param {number} page
+ * @param {number }size
  *
  * @return {*}
  */
-export function getTodos() {
-  return request({url: baseUrl}).then(handleResponse).catch(handleError);
+export function getTodos(page = 1, size = 10) {
+  return request({
+    url: baseUrl,
+    params: {
+      page,
+      size,
+    },
+  })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 /**
@@ -18,7 +28,7 @@ export function getTodos() {
  */
 export function saveTodo(todo) {
   return request({
-    url: baseUrl + (todo.id || ''),
+    url: baseUrl + '/' + (todo.id || ''),
     // POST for create, PUT to update when id already exists.
     method: todo.id ? 'PUT' : 'POST',
     data: todo,

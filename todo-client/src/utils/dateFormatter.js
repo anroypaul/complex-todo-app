@@ -45,7 +45,6 @@ export const completeFormatDate = (date) => {
 };
 
 export const getFormattedDate = (date) => {
-  console.log(date);
   const [year, month, day] = date.split('-');
   return month + '/' + day + '/' + year;
 };

@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
+import {Pagination} from 'semantic-ui-react';
 import {useDispatch, useSelector} from 'react-redux';
 import TodoItem from './TodoItem';
 import AddTodo from './AddTodo';
@@ -21,11 +22,18 @@ const TodoList = () => {
   );
   const dispatch = useDispatch();
 
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
-    dispatch(loadTodos()).catch((error) => {
+    dispatch(loadTodos(page)).catch((error) => {
       alert(error);
     });
-  }, [dispatch]);
+  }, [dispatch, page]);
+
+  const handlePaginationChange = (e, {activePage}) => {
+    setPage(activePage);
+    console.log('clicked');
+  };
 
   const updateTodo = (updatedTodo) => {
     dispatch(saveTodo(updatedTodo));
@@ -43,7 +51,7 @@ const TodoList = () => {
           <div className="ui section divider"></div>
           <div className="todo-list-body ui">
             <div className="ui relaxed divided items">
-              {todos.map((todo) => (
+              {todos?.rows.map((todo) => (
                 <TodoItem
                   key={todo.id}
                   description={todo.description}
@@ -84,7 +92,19 @@ const TodoList = () => {
             </div>
           </div>
           <div className="ui section divider"></div>
-          <div className="todo-list-footer"></div>
+          <div className="todo-list-footer">
+            <Pagination
+              activePage={page}
+              boundaryRange={0}
+              onPageChange={handlePaginationChange}
+              size="mini"
+              siblingRange={1}
+              ellipsisItem={null}
+              firstItem={null}
+              lastItem={null}
+              totalPages={todos.totalPages}
+            />
+          </div>
           {/* <button onClick={() => console.log(todos)}>get state</button> */}
         </div>
       </div>

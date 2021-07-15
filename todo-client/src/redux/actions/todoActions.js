@@ -30,10 +30,10 @@ export const loadTodosSuccess = (todos) => {
   return {type: types.LOAD_TODOS_SUCCESS, todos};
 };
 
-export const loadTodos = () => {
+export const loadTodos = (page = 1, size = 10) => {
   return async function (dispatch) {
     try {
-      const todos = await todoApi.getTodos();
+      const todos = await todoApi.getTodos(page, size);
       if (todos) dispatch(loadTodosSuccess(todos));
     } catch (error) {
       throw error;

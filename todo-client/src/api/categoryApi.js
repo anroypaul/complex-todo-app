@@ -15,11 +15,17 @@ export function getCategoriesForCurrentUser() {
 
 /**
  * @param {*} category
+ * @param {number} page
+ * @param {number} size
  * @return {*}
  */
-export function getTodosByCategory(category) {
+export function getTodosByCategory(category, page = 1, size = 10) {
   return request({
     url: `${baseUrl}/${category.id}/todos`,
+    params: {
+      page,
+      size,
+    },
   })
     .then(handleResponse)
     .catch(handleError);

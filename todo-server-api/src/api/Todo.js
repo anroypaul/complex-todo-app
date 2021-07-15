@@ -8,8 +8,23 @@ router.get('/', [verifyToken], async (req, res, next) => {
   try {
     // get all current user todo list
     // const category = req.params.categoryId;
-    const todoList = await Todo.findAll({where: {UserId: req.userId}});
-    res.json(todoList);
+    const size = req.query.size;
+    const page = req.query.page;
+
+    const limit = size ? +size : 10;
+    const offset = page ? (page - 1) * limit : 0;
+
+    const todoList = await Todo.findAndCountAll({
+      limit,
+      offset,
+      where: {UserId: req.userId},
+    });
+
+    const {count: totalItems, rows: rows} = todoList;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    res.json({totalItems, rows, totalPages, currentPage});
   } catch (error) {
     next(error);
   }

@@ -69,29 +69,47 @@ router.put('/', [verifyToken], async (req, res, next) => {
 
 router.get('/:id/todos', [verifyToken], async (req, res, next) => {
   try {
+    const size = req.query.size;
+    const page = req.query.page;
+
+    const limit = size ? +size : 10;
+    const offset = page ? (page - 1) * limit : 0;
+
     let todoList;
     if (!isNaN(parseInt(req.params.id))) {
-      todoList = await Todo.findAll({
+      todoList = await Todo.findAndCountAll({
+        limit,
+        offset,
         where: {CategoryId: parseInt(req.params.id)},
       });
     } else {
       if (req.params.id === 'INBOX') {
-        todoList = await Todo.findAll({
+        todoList = await Todo.findAndCountAll({
+          limit,
+          offset,
           where: {CategoryId: null},
         });
       }
-      if (req.params.id === 'TODAY') {
-        todoList = await Todo.findAll({
-          //  where: {CategoryId: {$eq: null}},
-        });
-      }
-      if (req.params.id === 'UPCOMING') {
-        todoList = await Todo.findAll({
-          //  where: {CategoryId: {$eq: null}},
-        });
-      }
+      // if (req.params.id === 'TODAY') {
+      //   todoList = await Todo.findAndCountAll({
+      //     limit,
+      //     offset,
+      //     //  where: {CategoryId: {$eq: null}},
+      //   });
+      // }
+      // if (req.params.id === 'UPCOMING') {
+      //   todoList = await Todo.findAndCountAll({
+      //     limit,
+      //     offset,
+      //     //  where: {CategoryId: {$eq: null}},
+      //   });
+      // }
     }
-    res.json(todoList);
+    const {count: totalItems, rows: rows} = todoList;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    res.json({totalItems, rows, totalPages, currentPage});
   } catch (error) {
     next(error);
   }

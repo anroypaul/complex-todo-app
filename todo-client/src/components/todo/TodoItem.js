@@ -42,7 +42,7 @@ const TodoItem = ({
 };
 
 TodoItem.propTypes = {
-  children: PropTypes.EditTodo,
+  children: PropTypes.array,
   description: PropTypes.string.isRequired,
   dueDate: PropTypes.string,
   completed: PropTypes.bool.isRequired,

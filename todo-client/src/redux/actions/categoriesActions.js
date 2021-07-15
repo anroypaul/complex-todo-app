@@ -18,10 +18,14 @@ export const loadCategories = () => {
 };
 
 // TODO: move to todo actions
-export const loadTodosByCategory = (category) => {
+export const loadTodosByCategory = (category, page, size) => {
   return async function (dispatch) {
     try {
-      const todoList = await categoryApi.getTodosByCategory(category);
+      const todoList = await categoryApi.getTodosByCategory(
+        category,
+        page,
+        size,
+      );
       if (todoList) dispatch(loadTodosSuccess(todoList));
     } catch (error) {
       throw error;
@@ -56,11 +60,11 @@ export const setCurrentCategory = (category) => {
   return {type: types.SWITCH_VIEW_CATEGORY, category};
 };
 
-export const switchCurrentCategory = (category) => {
+export const switchCurrentCategory = (category, page = 1, size = 10) => {
   return async function (dispatch) {
     try {
       await dispatch(setCurrentCategory(category));
-      await dispatch(loadTodosByCategory(category));
+      await dispatch(loadTodosByCategory(category, page, size));
     } catch (error) {
       throw error;
     }

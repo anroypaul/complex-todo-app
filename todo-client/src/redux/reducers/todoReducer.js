@@ -10,12 +10,12 @@ import initialState from './initialState';
 export default function todoReducer(state = initialState.todos, action) {
   switch (action.type) {
     case types.TOGGLE_TODO:
-      return state.map((todo) =>
+      return state.rows.map((todo) =>
         todo.id === action.id ? {...todo, completed: !todo.completed} : todo,
       );
 
     case types.DELETE_TODO:
-      return state.filter((todo) => todo.id !== action.id);
+      return state.rows.filter((todo) => todo.id !== action.id);
     // case types.ADD_TODO:
     //   const = action.todo;
     //   return [
@@ -28,10 +28,10 @@ export default function todoReducer(state = initialState.todos, action) {
     //     },
     //   ];
     case types.CREATE_TODO_SUCCESS:
-      return [...state, {...action.todo}];
+      return {...state, rows: [...state.rows, action.todo]};
 
     case types.UPDATE_TODO_SUCCESS:
-      return state.map((todo) =>
+      return state.rows.map((todo) =>
         todo.id === action.todo.id ? action.todo : todo,
       );
     case types.LOAD_TODOS_SUCCESS:

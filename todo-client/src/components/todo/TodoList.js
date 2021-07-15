@@ -6,6 +6,7 @@ import {
   deleteTodoAction,
   loadTodos,
   toggleTodoAction,
+  saveTodo,
 } from '../../redux/actions/todoActions';
 import EditTodo from './EditTodo';
 import ActionModal from '../../layout/ActionModal';
@@ -25,6 +26,10 @@ const TodoList = () => {
       alert(error);
     });
   }, [dispatch]);
+
+  const updateTodo = (updatedTodo) => {
+    dispatch(saveTodo(updatedTodo));
+  };
 
   return (
     <div className="ui segment">
@@ -47,24 +52,17 @@ const TodoList = () => {
                   priority={todo.priority}
                   onClick={() => dispatch(toggleTodoAction(todo.id))}
                 >
-                  <ActionModal
+                  <EditTodo
+                    currentTodo={todo}
+                    updateTodo={updateTodo}
                     title="Edit"
-                    onConfirmClick={() => dispatch(deleteTodoAction(todo.id))}
                     confirmButtonText="Save"
                     trigger={
                       <a>
                         <i className="edit alternate icon"></i>
                       </a>
                     }
-                  >
-                    <EditTodo
-                      description={todo.description}
-                      dueDate={todo.dueDate}
-                      completed={todo.completed}
-                      priority={todo.priority}
-                    />
-                  </ActionModal>
-
+                  />
                   <ActionModal
                     title="Delete"
                     onConfirmClick={() => dispatch(deleteTodoAction(todo.id))}

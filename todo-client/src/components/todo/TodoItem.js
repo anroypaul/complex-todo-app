@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {getFormattedDate} from '../../utils/dateFormatter';
 
 const TodoItem = ({
   children,
@@ -9,37 +10,6 @@ const TodoItem = ({
   priority,
   onClick,
 }) => {
-  // move to utils
-  const prettyFormatDate = (date) => {
-    /**
-     *
-     * @param {Date} dateObject
-     * @param {Array} dateFormat
-     * @param {String} delimeter
-     * @return {func}
-     */
-    function join(dateObject, dateFormat, delimeter) {
-      /**
-       *
-       * @param {*} m
-       * @return {*}
-       */
-      function format(m) {
-        const dateTimeFormat = new Intl.DateTimeFormat('en', m);
-        return dateTimeFormat.format(dateObject);
-      }
-      return dateFormat.map(format).join(delimeter);
-    }
-
-    const dateFormatArray = [
-      {day: 'numeric'},
-      {month: 'short'},
-      {year: 'numeric'},
-    ];
-    const dateString = join(new Date(), dateFormatArray, '-');
-    return dateString;
-  };
-
   return (
     <div className="todo">
       <div className="todo-header">
@@ -56,9 +26,10 @@ const TodoItem = ({
         <div className="content aligned">
           <p className={completed ? 'header checked-text' : 'header'}>
             {description}
+            <i className={`flag icon priority-${priority}`}></i>
           </p>
           <div className="description">
-            {dueDate && prettyFormatDate(dueDate)}
+            {dueDate && getFormattedDate(dueDate)}
           </div>
         </div>
       </div>
@@ -73,7 +44,7 @@ const TodoItem = ({
 TodoItem.propTypes = {
   children: PropTypes.EditTodo,
   description: PropTypes.string.isRequired,
-  dueDate: PropTypes.instanceOf(Date),
+  dueDate: PropTypes.string,
   completed: PropTypes.bool.isRequired,
   priority: PropTypes.number,
   onClick: PropTypes.func.isRequired,

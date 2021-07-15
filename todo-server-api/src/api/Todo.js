@@ -35,14 +35,23 @@ router.post('/', [verifyToken], async (req, res, next) => {
   }
 });
 
-router.put('/', [verifyToken], async (req, res, next) => {
+router.put('/:id', [verifyToken], async (req, res, next) => {
   try {
     // update current todo by id
     // TODO validate
-    const todoToUpdate = await Todo.update(req.body.todoId, {
-      where: {id: req.body.todoId},
-    });
-    res.json(todoToUpdate);
+    const todoToUpdate = await Todo.findByPk(req.params.id);
+    if (todoToUpdate === null) {
+      res.status(404);
+    } else {
+      console.log(req.body.dueDate);
+      await todoToUpdate.update({
+        description: req.body.description,
+        dueDate: req.body.dueDate,
+        priority: req.body.priority,
+        completed: req.body.completed,
+      });
+      res.json(todoToUpdate);
+    }
   } catch (error) {
     if (error.name === 'ValidationError') {
       res.status(422);

@@ -18,9 +18,9 @@ export function getTodos() {
  */
 export function saveTodo(todo) {
   return request({
-    url: baseUrl + (todo._id || ''),
+    url: baseUrl + (todo.id || ''),
     // POST for create, PUT to update when id already exists.
-    method: todo._id ? 'PUT' : 'POST',
+    method: todo.id ? 'PUT' : 'POST',
     data: todo,
   })
     .then(handleResponse)

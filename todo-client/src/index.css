@@ -123,3 +123,26 @@ code {
 .todo:hover {
   background-color: #e0e1e2;
 }
+
+.priority-1 {
+  margin-left: 10px;
+  padding-left: 10px;
+  visibility: hidden;
+}
+
+.priority-2 {
+  margin-left: 10px;
+  padding-left: 10px;
+  color: #337ab7;
+}
+.priority-3 {
+  margin-left: 10px;
+  padding-left: 10px;
+  color:orange;
+}
+
+.priority-4 {
+  margin-left: 10px;
+  padding-left: 10px;
+  color: red;
+}

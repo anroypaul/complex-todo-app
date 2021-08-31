@@ -23,3 +23,7 @@ Misc
 - [] Use async/await instead of promises
 - [+] ESList
 - [] fix DB names to lowercase etc
+- [] *migrate whole DB to Docker*
+
+- [] Setup tests
+- [] Setup PM2

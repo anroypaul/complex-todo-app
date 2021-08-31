@@ -26,6 +26,13 @@ Logic:
 - [] Popup for category delete 
 - [] Ask if delete todos as well 
 
+- React Router
+- Combine redux and router:
+The flow:
+
+More stuff to add:
+- [] - react-hook-forms
+
 Error handling:
 - [] Login form validation
 - [] Custom inputs and other stuff

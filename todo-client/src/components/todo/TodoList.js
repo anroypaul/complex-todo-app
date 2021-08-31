@@ -92,17 +92,21 @@ const TodoList = () => {
           </div>
           <div className="ui section divider"></div>
           <div className="todo-list-footer">
-            <Pagination
-              activePage={page}
-              boundaryRange={0}
-              onPageChange={handlePaginationChange}
-              size="mini"
-              siblingRange={1}
-              ellipsisItem={null}
-              firstItem={null}
-              lastItem={null}
-              totalPages={todos.totalPages}
-            />
+            {todos.length > 0 ? (
+              <Pagination
+                activePage={page}
+                boundaryRange={0}
+                onPageChange={handlePaginationChange}
+                size="mini"
+                siblingRange={1}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                totalPages={todos.totalPages || 0}
+              />
+            ) : (
+              ''
+            )}
           </div>
           {/* <button onClick={() => console.log(todos)}>get state</button> */}
         </div>

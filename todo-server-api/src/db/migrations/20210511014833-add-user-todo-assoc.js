@@ -8,7 +8,7 @@ module.exports = {
       {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Todos', // name of Target model
+          model: 'Users', // name of Target model
           key: 'id', // key in Target model that we're referencing
         },
         onUpdate: 'CASCADE',

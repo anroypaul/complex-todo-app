@@ -48,3 +48,10 @@ export const getFormattedDate = (date) => {
   const [year, month, day] = date.split('-');
   return month + '/' + day + '/' + year;
 };
+
+export const convertToLocaleDate = (date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    timeZone:
+      'UTC' /* this is fixes the situation when the date is one day behind*/,
+  });
+};

@@ -20,6 +20,7 @@ function App() {
           <Header />
           <div className="ui padded grid">
             <Sidebar />
+
             <Dashboard />
           </div>
         </>

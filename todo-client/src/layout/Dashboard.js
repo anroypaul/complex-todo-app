@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoList from '../components/todo/TodoList';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 /**
  * @component
@@ -17,7 +18,12 @@ const Dashboard = () => {
           {/* <h1 className="ui huge dividing header">Dashboard</h1>
           <div className="center aligned row">
           </div> */}
-          <TodoList />
+          <Switch>
+            <Route path="/:currentCategory">
+              <TodoList />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
         </div>
       </div>
     </div>

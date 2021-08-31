@@ -1,3 +1,4 @@
+const {Op} = require('sequelize');
 const {verifyToken} = require('../middlewares');
 const {Router} = require('express');
 const Todo = require('../db/models').Todo;
@@ -7,9 +8,34 @@ const router = new Router();
 router.get('/', [verifyToken], async (req, res, next) => {
   try {
     // get all current user todo list
-    // const category = req.params.categoryId;
+
+    const category = req.query.category;
     const size = req.query.size;
     const page = req.query.page;
+
+    // initial
+    let whereClause = {UserId: req.userId};
+
+    // checks if category is finite number
+    if (Number.isFinite(category)) {
+      whereClause = {...whereClause, CategoryId: category};
+    } else {
+      if (category === 'inbox') {
+        whereClause = {...whereClause, CategoryId: null};
+      } else if (category === 'today') {
+        whereClause = {
+          ...whereClause,
+          dueDate: new Date().toLocaleDateString(),
+        };
+      } else if (category === 'upcoming') {
+        whereClause = {
+          ...whereClause,
+          dueDate: {[Op.gt]: new Date().toLocaleDateString()},
+        };
+      }
+    }
+
+    console.log(whereClause);
 
     const limit = size ? +size : 10;
     const offset = page ? (page - 1) * limit : 0;
@@ -17,7 +43,7 @@ router.get('/', [verifyToken], async (req, res, next) => {
     const todoList = await Todo.findAndCountAll({
       limit,
       offset,
-      where: {UserId: req.userId},
+      where: whereClause,
     });
 
     const {count: totalItems, rows: rows} = todoList;
@@ -35,6 +61,8 @@ router.post('/', [verifyToken], async (req, res, next) => {
     // save todo in current category
     // TODO validate
     const {description, dueDate, CategoryId} = req.body;
+    console.log(req.userId);
+    console.log(CategoryId);
     const newTodo = await Todo.create({
       description,
       dueDate,

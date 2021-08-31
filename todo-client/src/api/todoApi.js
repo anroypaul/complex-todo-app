@@ -4,15 +4,17 @@ import {handleResponse, handleError} from './apiUtils';
 const baseUrl = process.env.REACT_APP_API_URL + '/todos';
 
 /**
+ * @param {string|number} category
  * @param {number} page
- * @param {number }size
+ * @param {number} size
  *
  * @return {*}
  */
-export function getTodos(page = 1, size = 10) {
+export function getTodos(category, page = 1, size = 10) {
   return request({
     url: baseUrl,
     params: {
+      category,
       page,
       size,
     },

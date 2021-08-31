@@ -36,6 +36,7 @@ router.post('/', [verifyToken], async (req, res, next) => {
     // save todo in current category
     // TODO validate
     const {name} = req.body;
+    console.log(req.userId);
     const newCategory = await Category.create({
       name,
       UserId: req.userId,

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getFormattedDate} from '../../utils/dateFormatter';
+import {convertToLocaleDate} from '../../utils/dateFormatter';
 
 const TodoItem = ({
   children,
@@ -29,7 +29,7 @@ const TodoItem = ({
             <i className={`flag icon priority-${priority}`}></i>
           </p>
           <div className="description">
-            {dueDate && getFormattedDate(dueDate)}
+            {dueDate && convertToLocaleDate(dueDate)}
           </div>
         </div>
       </div>

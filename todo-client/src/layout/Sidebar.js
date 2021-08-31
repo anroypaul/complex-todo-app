@@ -1,19 +1,20 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {NavLink} from 'react-router-dom';
 import AddCategory from '../components/category/AddCategory';
 import {
   loadCategories,
-  switchCurrentCategory,
+  // switchCurrentCategory,
 } from '../redux/actions/categoriesActions';
 
 const Sidebar = () => {
   const categories = useSelector((state) => state.categories);
-  const currentCategory = useSelector((state) =>
-    state.categories.filter(
-      (category) =>
-        category.selected !== undefined && category.selected === true,
-    ),
-  );
+  // const currentCategory = useSelector((state) =>
+  //   state.categories.filter(
+  //     (category) =>
+  //       category.selected !== undefined && category.selected === true,
+  //   ),
+  // );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,9 +23,9 @@ const Sidebar = () => {
     });
   }, [dispatch]);
 
-  const onCategoryLinkClick = (category, e) => {
-    dispatch(switchCurrentCategory(category));
-  };
+  // const onCategoryLinkClick = (category, e) => {
+  //   dispatch(switchCurrentCategory(category));
+  // };
 
   return (
     <div
@@ -32,50 +33,26 @@ const Sidebar = () => {
       id="sidebar"
     >
       <div className="ui vertical fluid text menu">
-        <a
-          href="#"
-          key="INBOX"
-          className={currentCategory?.id === 'INBOX' ? 'item active' : 'item'}
-          onClick={(e) => onCategoryLinkClick({id: 'INBOX', name: 'Inbox'}, e)}
-        >
-          {' '}
+        <NavLink to="/inbox" className="item" activeClassName="active">
           <i className="inbox icon"></i>Inbox
-        </a>
-        <a
-          href="#"
-          key="TODAY"
-          className={currentCategory?.id === 'TODAY' ? 'item active' : 'item'}
-          onClick={(e) => onCategoryLinkClick({id: 'TODAY', name: 'Today'}, e)}
-        >
-          {' '}
-          <i className="newspaper icon"></i> Today
-        </a>
-        <a
-          href="#"
-          key="UPCOMING"
-          className={
-            currentCategory?.id === 'UPCOMING' ? 'item active' : 'item'
-          }
-          onClick={(e) =>
-            onCategoryLinkClick({id: 'UPCOMING', name: 'Upcoming'}, e)
-          }
-        >
-          {' '}
+        </NavLink>
+        <NavLink to="/today" className="item" activeClassName="active">
+          <i className="newspaper icon"></i>Today
+        </NavLink>{' '}
+        <NavLink to="/upcoming" className="item" activeClassName="active">
           <i className="calendar icon"></i>Upcoming
-        </a>
+        </NavLink>
         <div className="ui divider"></div>
         {categories.map((category) => (
-          <a
+          <NavLink
             key={category.id}
-            href="#"
-            className={
-              currentCategory?.id === category.id ? 'item active' : 'item'
-            }
-            onClick={(e) => onCategoryLinkClick(category, e)}
+            to={`/${category.id}`}
+            className="item"
+            activeClassName="active"
           >
             {category.name}
             <div className="ui label">{category.todoCount}</div>
-          </a>
+          </NavLink>
         ))}
         <div className="ui divider"></div>
         <AddCategory />

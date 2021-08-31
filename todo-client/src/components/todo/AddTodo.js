@@ -1,15 +1,9 @@
 import React, {useState} from 'react';
-import {connect, useSelector} from 'react-redux';
+import {connect} from 'react-redux';
 import {saveTodo} from '../../redux/actions/todoActions';
 import PropTypes from 'prop-types';
 
-const AddTodo = ({saveTodo}) => {
-  const currentCategory = useSelector((state) =>
-    state.categories.find(
-      (category) =>
-        category.selected !== undefined && category.selected === true,
-    ),
-  );
+const AddTodo = ({saveTodo, currentCategory}) => {
   const [description, setDescription] = useState('');
   const [formActivated, setFormActivated] = useState(false);
 
@@ -17,10 +11,10 @@ const AddTodo = ({saveTodo}) => {
     e.preventDefault();
     const newTodo = {description};
     console.log(currentCategory);
-    if (!isNaN(parseInt(currentCategory.id))) {
-      newTodo.CategoryId = currentCategory.id;
+    if (currentCategory && Number.isFinite(currentCategory)) {
+      newTodo.CategoryId = currentCategory;
     } else {
-      if (currentCategory.id === 'TODAY') {
+      if (currentCategory.id === 'today') {
         newTodo.dueDate = Date.now();
       }
     }
@@ -69,6 +63,7 @@ const AddTodo = ({saveTodo}) => {
 
 AddTodo.propTypes = {
   saveTodo: PropTypes.func.isRequired,
+  currentCategory: PropTypes.string,
 };
 
 export default connect(null, {saveTodo})(AddTodo);

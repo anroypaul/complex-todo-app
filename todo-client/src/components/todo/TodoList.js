@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router';
 import {Pagination} from 'semantic-ui-react';
 import {useDispatch, useSelector} from 'react-redux';
 import TodoItem from './TodoItem';
@@ -13,22 +14,17 @@ import EditTodo from './EditTodo';
 import ActionModal from '../../layout/ActionModal';
 
 const TodoList = () => {
+  const {currentCategory} = useParams();
   const todos = useSelector((state) => state.todos);
-  const currentCategory = useSelector((state) =>
-    state.categories.filter(
-      (category) =>
-        category.selected !== undefined && category.selected === true,
-    ),
-  );
   const dispatch = useDispatch();
-
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(loadTodos(page)).catch((error) => {
+    console.log(currentCategory);
+    dispatch(loadTodos(currentCategory, page)).catch((error) => {
       alert(error);
     });
-  }, [dispatch, page]);
+  }, [dispatch, currentCategory, page]);
 
   const handlePaginationChange = (e, {activePage}) => {
     setPage(activePage);
@@ -38,14 +34,18 @@ const TodoList = () => {
     dispatch(saveTodo(updatedTodo));
   };
 
+  const titleBeatify = (text) => {
+    return typeof text === 'string'
+      ? text.charAt(0).toUpperCase() + text.slice(1)
+      : text;
+  };
+
   return (
     <div className="ui segment">
       <div className="sixteen wide column">
         <div className="ui celled container">
           <div className="todo-list-header">
-            <h3 className="ui header ">
-              {currentCategory[0]?.name || 'INBOX'}
-            </h3>
+            <h3 className="ui header ">{titleBeatify(currentCategory)}</h3>
           </div>
           <div className="ui section divider"></div>
           <div className="todo-list-body ui">
@@ -87,7 +87,7 @@ const TodoList = () => {
                   </ActionModal>
                 </TodoItem>
               ))}
-              <AddTodo />
+              <AddTodo currentCategory={currentCategory} />
             </div>
           </div>
           <div className="ui section divider"></div>

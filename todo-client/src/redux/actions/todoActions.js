@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import * as todoApi from '../../api/todoApi';
-import {incrementCurrentCategoryTodoCounter} from './categoriesActions';
+// import {incrementCurrentCategoryTodoCounter} from './categoriesActions';
 // export const addTodoAction = (todo) => ({
 //   type: types.ADD_TODO,
 //   payload: todo,
@@ -30,10 +30,10 @@ export const loadTodosSuccess = (todos) => {
   return {type: types.LOAD_TODOS_SUCCESS, todos};
 };
 
-export const loadTodos = (page = 1, size = 10) => {
+export const loadTodos = (category, page = 1, size = 10) => {
   return async function (dispatch) {
     try {
-      const todos = await todoApi.getTodos(page, size);
+      const todos = await todoApi.getTodos(category, page, size);
       if (todos) dispatch(loadTodosSuccess(todos));
     } catch (error) {
       throw error;
@@ -47,7 +47,7 @@ export const saveTodo = (todo) => {
       const savedTodo = await todoApi.saveTodo(todo);
       if (todo.id) dispatch(updateTodoSuccess(savedTodo));
       else {
-        dispatch(incrementCurrentCategoryTodoCounter());
+        // dispatch(incrementCurrentCategoryTodoCounter());
         dispatch(createTodoSuccess(savedTodo));
       }
     } catch (error) {
